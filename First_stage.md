@@ -39,3 +39,4 @@ For Part II higher-res object detection combine multiple and use ridge regressio
 VGG-16, ResNet
 Understanding Amazon from space - Kaggle, used 11 CNNs - This is pretty nice, details winners' end-to-end architecture. simplenet, inception v3, resnet_34 *_50 *_101 *_152, resnet dilation, densenet121 161 169 201
 http://blog.kaggle.com/2017/10/17/planet-understanding-the-amazon-from-space-1st-place-winners-interview/
+FMoW https://github.com/fMoW - First place used 12 Deep-Path 92 Networks https://github.com/cypw/DPNs, 2nd place used three MXnet models, 3rd place used the 'Hydra' framework which is an ensemble of ResNet and DenseNet architectures https://arxiv.org/abs/1802.03518
