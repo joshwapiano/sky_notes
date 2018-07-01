@@ -23,4 +23,9 @@ _All other tensors are temporary which means that they will be destroyed and ina
 
 [Shapes in TF](https://blog.metaflow.fr/shapes-and-dynamic-dimensions-in-tensorflow-7b1fe79be363)
 __Tensors in TensorFlow have 2 shapes: The static shape AND the dynamic shape!__
-
+__The static shape__ is the shape you provided when creating a tensor OR the shape inferred by TensorFlow when you define an operation resulting in a new tensor. It is a tuple or a list.
+```
+my_tensor = tf.constant(47., shape=[2,3,2])
+print(my_tensor) # -> Tensor("Const:0", shape=(6, 3, 7), dtype=float32)
+```
+__The dynamic shape__ is the actual one used when you run your graph. It is itself a tensor describing the shape of the original tensor.
