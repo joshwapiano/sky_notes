@@ -48,3 +48,8 @@ Use the dynamic shape everywhere else especially when you have undefined dimensi
 ### 'TensorFlow: saving/restoring and mixing multiple models'
 ###### https://blog.metaflow.fr/tensorflow-saving-restoring-and-mixing-multiple-models-c4c94d5d7125
 
+#### How to actually save and load something
+##### The Saver and Session object
+Any interaction with your filesystem to save persistent data in TF needs a [Saver object](https://www.tensorflow.org/api_docs/python/tf/train/Saver) and a [Session object](https://www.tensorflow.org/api_docs/python/tf/Session).
+
+The __Saver constructor__ allows you to control the _var_list_: (Default `None`), this is the list of variables you want to persist within your filesystem. You can either choose to save all the variables, some variables or even a dictionary to give custom names to your variables.
