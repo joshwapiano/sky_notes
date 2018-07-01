@@ -21,11 +21,30 @@ To summarise - there are two main phases in TF code:
 __The most important part is that only variables keeps their data between multiple session evaluations.__
 _All other tensors are temporary which means that they will be destroyed and inaccessible in your training for-loop without a proper feed_dict or any other input pipeline of your choice._ __This is very memory efficient__
 
-[Shapes in TF](https://blog.metaflow.fr/shapes-and-dynamic-dimensions-in-tensorflow-7b1fe79be363)
+### [Shapes in TF](https://blog.metaflow.fr/shapes-and-dynamic-dimensions-in-tensorflow-7b1fe79be363)
+
 __Tensors in TensorFlow have 2 shapes: The static shape AND the dynamic shape!__
 __The static shape__ is the shape you provided when creating a tensor OR the shape inferred by TensorFlow when you define an operation resulting in a new tensor. It is a tuple or a list.
 ```
 my_tensor = tf.constant(47., shape=[2,3,2])
-print(my_tensor) # -> Tensor("Const:0", shape=(6, 3, 7), dtype=float32)
+print(my_tensor) # -> Tensor("Const:0", shape=(2, 3, 2), dtype=float32)
 ```
 __The dynamic shape__ is the actual one used when you run your graph. It is itself a tensor describing the shape of the original tensor.
+
+```
+print(my_tensor.eval(session=tf.Session()))
+[[[47. 47.]
+  [47. 47.]
+  [47. 47.]]
+
+ [[47. 47.]
+  [47. 47.]
+  [47. 47.]]]
+```
+
+Use the static shape for debugging
+Use the dynamic shape everywhere else especially when you have undefined dimensions
+
+### 'TensorFlow: saving/restoring and mixing multiple models'
+###### https://blog.metaflow.fr/tensorflow-saving-restoring-and-mixing-multiple-models-c4c94d5d7125
+
