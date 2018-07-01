@@ -17,3 +17,10 @@ But as soon as you get out of the scope of your __Session__, the __Graph__ retur
 To summarise - there are two main phases in TF code:
 1.  The __Graph level__: You can design mathematical and control flow operations which will be the different parts of your __Graph__. At this level, you can only save your __Graph__ itself and its __metadata__, nothing tangible exists yet.
 2.  The __Session and evaluation level__: variables get initialised, other book keeping functions gets configured, operations get executed, intermediary tensors and gradients get calculated, etc.
+
+__The most important part is that only variables keeps their data between multiple session evaluations.__
+_All other tensors are temporary which means that they will be destroyed and inaccessible in your training for-loop without a proper feed_dict or any other input pipeline of your choice._ __This is very memory efficient__
+
+[Shapes in TF](https://blog.metaflow.fr/shapes-and-dynamic-dimensions-in-tensorflow-7b1fe79be363)
+__Tensors in TensorFlow have 2 shapes: The static shape AND the dynamic shape!__
+
