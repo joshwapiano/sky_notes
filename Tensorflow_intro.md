@@ -53,8 +53,11 @@ Use the dynamic shape everywhere else especially when you have undefined dimensi
 Any interaction with your filesystem to save persistent data in TF needs a [Saver object](https://www.tensorflow.org/api_docs/python/tf/train/Saver) and a [Session object](https://www.tensorflow.org/api_docs/python/tf/Session).
 
 The __Saver constructor__ allows control of the _var_list_: (Default `None`), this is the list of variables that will persist within the filesystem. You can either choose to save all the variables, some variables or even a dictionary to give custom names to your variables.
+The Saver handles the saving and loading (called restoring) of your Graph metadata and your Variables data. To do that, it adds operations inside the current Graph that will be evaluated within a session.
+By default, the Saver will handle the default Graph and all its included Variables, but you can create as much Savers as you want to control any graph or subgraph and their variables.
 
 The __Session constructor__ controls 3 things:
 - _The var_list_ to be used in case of a distributed architecture to handle computation. You can specify which TF server or ‘target’ you want to compute on.
 - Which __graph__ the Session will handle. The tricky things for beginners, is the fact that there is always a default Graph in TF where all operations are set by default, so you are always in a “default Graph scope”.
 - The config: You can use `ConfigProto` to configure TF.
+
