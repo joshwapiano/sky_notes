@@ -34,7 +34,7 @@ Development Seed's label-maker final example method actually uses local GPU! But
 
 Phil Stubbins ONS used SegNet for his Skywalker project, also mentions UNet, Deeplab Resnet, DilatedNet in Keras
 
-For Part II higher-res object detection combine multiple and use ridge regression model?
+For Part II higher-res object detection combine multiple and use [ridge regression model](https://en.wikipedia.org/wiki/Tikhonov_regularization)?
 
 VGG-16, ResNet
 Understanding Amazon from space - Kaggle, used 11 CNNs - This is pretty nice, details winners' end-to-end architecture. simplenet, inception v3, resnet_34 *_50 *_101 *_152, resnet dilation, densenet121 161 169 201
