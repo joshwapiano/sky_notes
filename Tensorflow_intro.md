@@ -98,7 +98,6 @@ with tf.Session() as sess:
   ```
   
   [Protocol Buffers, often abreviated __Protobufs__, is the format used by TF to store and transfer data efficiently.](https://developers.google.com/protocol-buffers/) Like a faster XML or JSON format that can be compressed after development from .pbtxt to .pb to save space/bandwidth for storage/transfer in production.
-  
 
 The (.meta, .index, .data) trio of checkpoint files store the compressed data about your models and its weights.
 - The __checkpoint file__ is just a bookkeeping file that you can use in combination of high-level helper for loading different time saved chkp files.
@@ -106,3 +105,26 @@ The (.meta, .index, .data) trio of checkpoint files store the compressed data ab
 - The __.index file__ holds an immutable key-value table linking a serialised tensor name and where to find its data in the chkp.data files
 - The __.data files__ hold the data (weights) itself (this one is usually quite big in size). There can be many data files because they can be sharded and/or created on multiple timesteps while training.
 - Finally, the __events file__ store everything you need to visualise your model and all the data measured while you were training using summaries. This has nothing to do with saving/restoring your models itself.
+
+Restoring the weights
+The weights only exists within a Session, so to “restore” there be a session to restore weights inside a Graph. The best way to understand the restore operation is to see it simply as a kind of initialisation.
+```
+with tf.Session() as sess:
+    # To initialize values with saved data
+    saver.restore(sess, 'results/model.ckpt.data-1000-00000-of-00001')
+    print(sess.run(global_step_tensor)) # returns 1000
+```
+
+### 'TensorFlow: How to freeze a model and serve it with a python API'
+###### https://blog.metaflow.fr/tensorflow-how-to-freeze-a-model-and-serve-it-with-a-python-api-d4f3596b3adc
+
+##### Freezing a model:
+Let’s start from a folder containing a model, the important files here are `.chkp.meta`, `.chkp.index` and `.chkp.data`. For each pair at different timesteps, one is holding the weights (`.chkp.data`) and the other one (`.chkp.meta`) is holding the graph and all its metadata (so you can retrain it etc…)
+In TF we can easily build a function that will package our model and its weights nicely one file. This facilitates storage, versioning and updates of your different models.
+Let’s explore the different steps we have to perform:
+- Retrieve our saved graph: we need to load the previously saved meta graph in the default graph and retrieve its graph_def (the ProtoBuf definition of our graph)
+- Restore the weights: we start a Session and restore the weights of our graph inside that Session
+- Remove all metadata useless for inference: Here, TF helps us with a nice helper function which grab just what is needed in your graph to perform inference and returns what we will call our new “frozen graph_def”
+- Save it to the disk, Finally we will serialize our frozen graph_def ProtoBuf and dump it to the disk
+- Note that the two first steps are the same as when we load any graph in TF, the only tricky part is actually the graph “freezing” and TF has a built-in function to do it!
+
