@@ -101,9 +101,8 @@ with tf.Session() as sess:
   
 
 The (.meta, .index, .data) trio of checkpoint files store the compressed data about your models and its weights.
-
-- The checkpoint file is just a bookkeeping file that you can use in combination of high-level helper for loading different time saved chkp files.
-- The .meta file holds the compressed Protobufs graph of your model and all the metadata associated (collections, learning rate, operations, etc.)
-- The .index file holds an immutable key-value table linking a serialised tensor name and where to find its data in the chkp.data files
-- The .data files hold the data (weights) itself (this one is usually quite big in size). There can be many data files because they can be sharded and/or created on multiple timesteps while training.
-- Finally, the events file store everything you need to visualise your model and all the data measured while you were training using summaries. This has nothing to do with saving/restoring your models itself.
+- The __checkpoint file__ is just a bookkeeping file that you can use in combination of high-level helper for loading different time saved chkp files.
+- The __.meta file__ holds the compressed Protobufs graph of your model and all the metadata associated (collections, learning rate, operations, etc.)
+- The __.index file__ holds an immutable key-value table linking a serialised tensor name and where to find its data in the chkp.data files
+- The __.data files__ hold the data (weights) itself (this one is usually quite big in size). There can be many data files because they can be sharded and/or created on multiple timesteps while training.
+- Finally, the __events file__ store everything you need to visualise your model and all the data measured while you were training using summaries. This has nothing to do with saving/restoring your models itself.
