@@ -32,7 +32,7 @@ Development Seed's label-maker final example method actually uses local GPU! But
 
 #### How advanced would the land use classification need to be? Probably only one Neural Net could achieve accuracy required here.
 
-Phil Stubbins ONS used SegNet for his Skywalker project, also mentions UNet, Deeplab Resnet, DilatedNet in Keras
+Phil Stubbings ONS used SegNet for his Skywalker project, also mentions UNet, Deeplab Resnet, DilatedNet in Keras
 
 For Part II higher-res object detection combine multiple and use [ridge regression model](https://en.wikipedia.org/wiki/Tikhonov_regularization)?
 
