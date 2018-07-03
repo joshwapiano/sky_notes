@@ -61,3 +61,49 @@ The __Session constructor__ controls 3 things:
 - Which __graph__ the Session will handle. The tricky things for beginners, is the fact that there is always a default Graph in TF where all operations are set by default, so you are always in a “default Graph scope”.
 - The config: You can use `ConfigProto` to configure TF.
 
+```
+import tensorflow as tf
+
+import os
+dir = os.path.dirname(os.path.realpath(__file__))
+
+# Currently, we are in the default graph scope
+
+# Let's design some variables
+v1 = tf.Variable(1. , name="v1")
+v2 = tf.Variable(2. , name="v2")
+# Let's design an operation
+a = tf.add(v1, v2)
+
+# We can check easily that we are indeed in the default graph
+print(a.graph == tf.get_default_graph())
+# -> True
+
+# Let's create a Saver object
+# By default, the Saver handles every Variables related to the default graph
+all_saver = tf.train.Saver() 
+# But you can precise which vars you want to save (as a list) and under which name (with a dict)
+v2_saver = tf.train.Saver({"v2": v2}) 
+
+
+# By default the Session handles the default graph and all its included variables
+with tf.Session() as sess:
+  # Init v1 and v2   
+  sess.run(tf.global_variables_initializer())
+  # Now v1 holds the value 1.0 and v2 holds the value 2.0
+  # and we can save them
+  all_saver.save(sess, dir + '/data-all')
+  # or saves only v2
+  v2_saver.save(sess, dir + '/data-v2')
+  ```
+  
+  [Protocol Buffers, often abreviated Protobufs, is the format used by TF to store and transfer data efficiently.](https://developers.google.com/protocol-buffers/) Like a faster XML or JSON format that can be compressed after development from .pbtxt to .pb to save space/bandwidth for storage/transfer in production.
+  
+
+The (.meta, .index, .data) trio of checkpoint files store the compressed data about your models and its weights.
+
+- The checkpoint file is just a bookkeeping file that you can use in combination of high-level helper for loading different time saved chkp files.
+- The .meta file holds the compressed Protobufs graph of your model and all the metadata associated (collections, learning rate, operations, etc.)
+- The .index file holds an immutable key-value table linking a serialised tensor name and where to find its data in the chkp.data files
+- The .data files hold the data (weights) itself (this one is usually quite big in size). There can be many data files because they can be sharded and/or created on multiple timesteps while training.
+- Finally, the events file store everything you need to visualise your model and all the data measured while you were training using summaries. This has nothing to do with saving/restoring your models itself.
