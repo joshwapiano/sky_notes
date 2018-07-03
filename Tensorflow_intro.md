@@ -97,7 +97,7 @@ with tf.Session() as sess:
   v2_saver.save(sess, dir + '/data-v2')
   ```
   
-  [Protocol Buffers, often abreviated Protobufs, is the format used by TF to store and transfer data efficiently.](https://developers.google.com/protocol-buffers/) Like a faster XML or JSON format that can be compressed after development from .pbtxt to .pb to save space/bandwidth for storage/transfer in production.
+  [Protocol Buffers, often abreviated __Protobufs__, is the format used by TF to store and transfer data efficiently.](https://developers.google.com/protocol-buffers/) Like a faster XML or JSON format that can be compressed after development from .pbtxt to .pb to save space/bandwidth for storage/transfer in production.
   
 
 The (.meta, .index, .data) trio of checkpoint files store the compressed data about your models and its weights.
