@@ -126,5 +126,14 @@ Let’s explore the different steps we have to perform:
 - Restore the weights: we start a Session and restore the weights of our graph inside that Session
 - Remove all metadata useless for inference: Here, TF helps us with a nice helper function which grab just what is needed in your graph to perform inference and returns what we will call our new “frozen graph_def”
 - Save it to the disk, Finally we will serialize our frozen graph_def ProtoBuf and dump it to the disk
-- Note that the two first steps are the same as when we load any graph in TF, the only tricky part is actually the graph “freezing” and TF has a built-in function to do it!
+_Note that the two first steps are the same as when we load any graph in TF, the only tricky part is actually the graph “freezing” and TF has a built-in function to do it!_
 
+##### How to use the frozen model:
+Naturally, after knowing how to freeze a model, one might wonder how to use it.
+
+The little trick to have in mind is to understand that what we dumped to the disk was a graph_def ProtoBuf. So to import it back in a python script we need to:
+
+- Import a graph_def ProtoBuf first
+- Load this graph_def into a actual Graph
+
+See blog link above for code.
